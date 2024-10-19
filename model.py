@@ -113,10 +113,12 @@ class DatabaseModel:
     def highest_score_by_subject(self):
         """ Tìm sinh viên có điểm cao nhất trong từng môn học. """
         try:
+            # Câu truy vấn SQL để tìm sinh viên có điểm cao nhất cho từng môn
             highest_math = f"SELECT id, name, math_score FROM {self.table_name} ORDER BY math_score DESC LIMIT 1"
             highest_literature = f"SELECT id, name, literature_score FROM {self.table_name} ORDER BY literature_score DESC LIMIT 1"
             highest_english = f"SELECT id, name, english_score FROM {self.table_name} ORDER BY english_score DESC LIMIT 1"
 
+            # Thực hiện truy vấn cho từng môn
             self.cursor.execute(highest_math)
             math = self.cursor.fetchone()
 
@@ -126,30 +128,45 @@ class DatabaseModel:
             self.cursor.execute(highest_english)
             english = self.cursor.fetchone()
 
-            return {
-                "math": math,
-                "literature": literature,
-                "english": english
-            }
+            # Kiểm tra nếu có kết quả và trả về dữ liệu
+            if math and literature and english:
+                result = {
+                    "math": math,
+                    "literature": literature,
+                    "english": english
+                }
+
+                # Hiển thị thông tin sinh viên có điểm cao nhất trên giao diện
+                messagebox.showinfo(
+                    "Điểm cao nhất",
+                    f"Toán: {math[1]} - Điểm: {math[2]}\n"
+                    f"Văn: {literature[1]} - Điểm: {literature[2]}\n"
+                    f"Anh: {english[1]} - Điểm: {english[2]}"
+                )
+                return result
+            else:
+                messagebox.showwarning("Thông báo", "Không có dữ liệu để hiển thị.")
+                return None
+
         except Exception as e:
             messagebox.showerror("Lỗi", f"Lỗi khi tìm điểm cao nhất: {e}")
             return None
 
     def export_data(self):
-        """ Xuất dữ liệu sinh viên và điểm ra tệp TXT. """
+        """ Xuất dữ liệu sinh viên và điểm ra tệp TXT với định dạng mong muốn. """
         try:
             with open("students_scores.txt", mode="w", encoding="utf-8") as file:
-                file.write("Mã số\tTên\tNăm sinh\tĐiểm Toán\tĐiểm Văn\tĐiểm Anh\n")
-                file.write("="*60 + "\n")
-
-                # Chỉ lấy các cột cần thiết
+                # Dòng tiêu đề không cần thiết vì xuất dữ liệu theo định dạng tự do
+                # Ghi các cột cần thiết với định dạng mong muốn
                 query = f"SELECT id, name, birth_year, math_score, literature_score, english_score FROM {self.table_name}"
                 self.cursor.execute(query)
                 students = self.cursor.fetchall()
 
                 for student in students:
                     id, name, birth_year, math, literature, english = student
-                    file.write(f"{id}\t{name}\t{birth_year}\t{math}\t{literature}\t{english}\n")
+                    # Ghi thông tin sinh viên theo định dạng yêu cầu
+                    file.write(f"Tên: {name}, Mã số: {id}, Năm sinh: {birth_year}, "
+                            f"Điểm Toán: {math}, Điểm Văn: {literature}, Điểm Anh: {english}\n")
 
             messagebox.showinfo("Thông báo", "Dữ liệu đã được xuất ra tệp students_scores.txt thành công!")
         except Exception as e:

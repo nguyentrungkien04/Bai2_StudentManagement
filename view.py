@@ -53,7 +53,7 @@ class MainView:
         self.create_main_screen()   
 
     def create_main_screen(self):
-        self.root.title("Ứng dụng chính")
+        self.root.title("ỨNG DỤNG QUẢN LÝ SINH VIÊN")
         self.root.geometry("600x500")
 
         notebook = ttk.Notebook(self.root)
