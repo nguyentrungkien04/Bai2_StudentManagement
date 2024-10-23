@@ -166,7 +166,7 @@ class DatabaseModel:
                     id, name, birth_year, math, literature, english = student
                     # Ghi thông tin sinh viên theo định dạng yêu cầu
                     file.write(f"Tên: {name}, Mã số: {id}, Năm sinh: {birth_year}, "
-                            f"Điểm Toán: {math}, Điểm Văn: {literature}, Điểm Anh: {english}\n")
+                        f"Điểm Toán: {math}, Điểm Văn: {literature}, Điểm Anh: {english}\n")
         except Exception as e:
             messagebox.showerror("Lỗi", f"Lỗi khi xuất dữ liệu: {e}")
 
