@@ -325,6 +325,5 @@ class MainView:
                     # Ghi dữ liệu vào file
                     file.write(f"{id_name_birth[0]}\t{id_name_birth[1]}\t{id_name_birth[2]}\t" +
                             f"{scores_values[0]}\t{scores_values[1]}\t{scores_values[2]}\n")
-
-            messagebox.showinfo("Xuất dữ liệu", "Dữ liệu đã được xuất ra tệp students_scores.txt thành công!")
+        messagebox.showinfo("Xuất dữ liệu", "Dữ liệu đã được xuất ra tệp students_scores.txt thành công!")
 

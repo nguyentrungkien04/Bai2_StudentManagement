@@ -167,8 +167,6 @@ class DatabaseModel:
                     # Ghi thông tin sinh viên theo định dạng yêu cầu
                     file.write(f"Tên: {name}, Mã số: {id}, Năm sinh: {birth_year}, "
                             f"Điểm Toán: {math}, Điểm Văn: {literature}, Điểm Anh: {english}\n")
-
-            messagebox.showinfo("Thông báo", "Dữ liệu đã được xuất ra tệp students_scores.txt thành công!")
         except Exception as e:
             messagebox.showerror("Lỗi", f"Lỗi khi xuất dữ liệu: {e}")
 
